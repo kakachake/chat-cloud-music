@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
-import './index.less'
+import { GlobalContextProvider } from './components/globalContext'
+import './styles/index.less'
 
 export function renderChat(container?: HTMLElement) {
   if (!container) {
@@ -13,7 +14,9 @@ export function renderChat(container?: HTMLElement) {
     container || (document.getElementById('chat') as HTMLElement)
   ).render(
     <React.StrictMode>
-      <App />
+      <GlobalContextProvider>
+        <App />
+      </GlobalContextProvider>
     </React.StrictMode>
   )
 }

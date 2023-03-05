@@ -1,0 +1,46 @@
+.barWrap {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 10px;
+  box-sizing: border-box;
+  bottom: 0;
+  align-items: center;
+  min-height: var(--chat-input-min-height);
+
+  background-color: var(--background-color-gray-2);
+  gap: 10px;
+  .plusWrap,
+  .sendWrap {
+    flex: 0 0 auto;
+    display: flex;
+  }
+  .sendWrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    background-color: var(--background-color);
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    padding: 3px 0;
+    &:hover {
+      background-color: var(--background-color-hover);
+    }
+    &:active {
+      background-color: var(--background-color);
+    }
+  }
+  .inputWrap {
+    background-color: #fff;
+    flex: 1 1 auto;
+    margin: 6px 0;
+    min-height: calc(var(--chat-input-min-height) - 12px);
+    max-height: calc(3 * var(--chat-input-min-height));
+    overflow: scroll;
+  }
+}
