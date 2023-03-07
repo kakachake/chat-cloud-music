@@ -1,9 +1,11 @@
 import { useEffect, useRef } from 'react'
 
 export default function useMove<T extends HTMLElement>(
-  moveElementName: string
+  moveElementName: string,
+  deps: any[] = []
 ) {
   const targetRef = useRef<T | null>(null)
+  const isDraged = useRef(false)
   const moveOffsetRef = useRef<{
     x: number
     y: number
@@ -19,6 +21,7 @@ export default function useMove<T extends HTMLElement>(
 
     const { current } = targetRef
     const onMouseMove = (e: MouseEvent) => {
+      isDraged.current = true
       const { clientX, clientY } = e
 
       const { newX, newY } = {
@@ -28,11 +31,12 @@ export default function useMove<T extends HTMLElement>(
       moveElement.style.left = `${newX}px`
       moveElement.style.top = `${newY}px`
     }
-    const onMouseUp = () => {
+    const onMouseUp = (e: any) => {
       document.removeEventListener('mousemove', onMouseMove)
       document.removeEventListener('mouseup', onMouseUp)
     }
     current.addEventListener('mousedown', (e: MouseEvent) => {
+      isDraged.current = false
       const { left, top } = moveElement.getBoundingClientRect()
       moveOffsetRef.current = {
         x: e.clientX - left,
@@ -47,6 +51,6 @@ export default function useMove<T extends HTMLElement>(
         document.removeEventListener('mouseup', onMouseUp)
       })
     }
-  }, [moveElementName, targetRef])
-  return [targetRef] as const
+  }, [moveElementName, targetRef, ...deps])
+  return [targetRef, isDraged] as const
 }

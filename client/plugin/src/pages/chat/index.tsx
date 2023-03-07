@@ -3,26 +3,15 @@ import ChatInputBar from './chatInputBar'
 import { MessageList } from 'chat-ui'
 import { useEffect, useRef, useState } from 'react'
 import { IMessageList } from 'chatTypes'
+import { sendMsg, user } from '../../request/socket/chat'
+import useChatList from './useChatList'
 
 export default function Chat() {
   const messageRef = useRef<HTMLDivElement | null>(null)
-  const [chatList, setChatList] = useState<IMessageList>([])
-  const handleSend = (value: string) => {
-    setChatList((prev) => {
-      return [
-        ...prev,
-        {
-          content: value,
-          id: prev.length + 1,
-          user: {
-            id: Math.random() > 0.5 ? 1 : 2,
-            name: '小明',
-            avatar:
-              'http://p2.music.126.net/hu5fA12xFpK9_6G27Kmbpw==/109951165136954444.jpg'
-          }
-        }
-      ]
-    })
+  const [chatList, setChatList] = useChatList({
+    scrollToBottom
+  })
+  function scrollToBottom() {
     if (messageRef.current) {
       const { scrollTop, scrollHeight, offsetHeight } = messageRef.current
       if (scrollTop + offsetHeight >= scrollHeight - 100) {
@@ -35,6 +24,21 @@ export default function Chat() {
         })
       }
     }
+  }
+  const handleSend = (value: string) => {
+    sendMsg(value)
+    setChatList((prev) => {
+      return [
+        ...prev,
+        {
+          content: value,
+          id: prev.length + 1,
+          user,
+          isOwn: true
+        }
+      ]
+    })
+    scrollToBottom()
   }
 
   return (

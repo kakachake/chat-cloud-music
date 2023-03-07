@@ -16,9 +16,10 @@ export default function Input(props: InputProps) {
 
   const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value: curValue } = e.target
-    console.log(curValue)
+    console.dir(e.target)
+    console.log(e.target.value)
 
-    if (!curValue) return
+    if (curValue === undefined) return
     if (defaultValue === undefined) {
       setValue(curValue)
     }

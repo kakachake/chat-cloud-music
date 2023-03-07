@@ -10,12 +10,13 @@ export default function MessageItem(props: MessageItemProps) {
   const {
     content,
     id,
-    user: { name, id: userId, avatar }
+    user: { name, id: userId, avatar },
+    isOwn
   } = props
   return (
     <div
       className={cs(styles.messageWrap, {
-        [styles.messageItemRight]: userId !== 1
+        [styles.messageItemRight]: isOwn
       })}
     >
       <div>
