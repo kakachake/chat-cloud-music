@@ -3,7 +3,11 @@ import globalContext from '../../components/globalContext'
 import styles from './index.module.less'
 import { useMove } from 'chat-ui'
 
-export default function Header() {
+export default function Header(props: {
+  right?: React.ReactNode
+  center?: React.ReactNode
+  left?: React.ReactNode
+}) {
   const [headerRef] = useMove<HTMLDivElement>('#chat_app')
   const [open, setOpen] = useContext(globalContext).open
   const handleSetOpen = () => {
@@ -11,12 +15,12 @@ export default function Header() {
   }
   return (
     <div className={styles.header}>
-      <div>返回</div>
+      <div className={styles.right}>{props.right}</div>
       <div className={styles.center} ref={headerRef}>
-        聊天室-1024
+        {props.center}
       </div>
       <div className={styles.openBtn} onClick={handleSetOpen}>
-        最小化
+        {props.left}
       </div>
     </div>
   )

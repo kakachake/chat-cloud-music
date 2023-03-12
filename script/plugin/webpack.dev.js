@@ -19,7 +19,10 @@ module.exports = {
     }
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js', 'css', 'less']
+    extensions: ['.tsx', '.ts', '.js', 'css', 'less'],
+    alias: {
+      '@': path.resolve(baseDir, 'client/plugin/src')
+    }
   },
   module: {
     rules: [

@@ -1,7 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { Provider } from 'react-redux'
 import App from './App'
 import { GlobalContextProvider } from './components/globalContext'
+import { store } from './store'
 import './styles/index.less'
 
 export function renderChat(container?: HTMLElement) {
@@ -14,9 +16,11 @@ export function renderChat(container?: HTMLElement) {
     container || (document.getElementById('chat') as HTMLElement)
   ).render(
     <React.StrictMode>
-      <GlobalContextProvider>
-        <App />
-      </GlobalContextProvider>
+      <Provider store={store}>
+        <GlobalContextProvider>
+          <App />
+        </GlobalContextProvider>
+      </Provider>
     </React.StrictMode>
   )
 }

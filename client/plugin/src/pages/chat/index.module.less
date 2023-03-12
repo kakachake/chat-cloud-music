@@ -2,8 +2,30 @@
   height: 100%;
   background-color: var(--background-color-gray);
   .messageWrap {
-    height: calc(100% - var(--chat-input-min-height));
+    height: calc(100% - var(--chat-input-min-height) - var(--header-height));
     overflow-y: scroll;
     overflow-x: hidden;
+  }
+}
+
+.header {
+  height: var(--header-height);
+  background-color: #fff;
+  padding: 5px;
+  line-height: var(--header-height);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+  justify-content: space-between;
+  cursor: move;
+  user-select: none;
+  .center {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+  .openBtn {
+    cursor: pointer;
+    flex: 0 0 3em;
   }
 }

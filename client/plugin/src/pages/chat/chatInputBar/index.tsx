@@ -1,8 +1,7 @@
 import styles from './index.module.less'
-import { Input, useKeyPress } from 'chat-ui'
+import { Input } from 'chat-ui'
 import { PlusCircle, Send } from 'lucide-react'
-import { EventHandler, KeyboardEvent, useState } from 'react'
-import { IMessageList } from 'chatTypes'
+import { KeyboardEvent, useState } from 'react'
 
 interface ChatInputBarProps {
   onSend: (value: string) => void

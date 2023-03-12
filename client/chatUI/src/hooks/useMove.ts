@@ -21,7 +21,9 @@ export default function useMove<T extends HTMLElement>(
 
     const { current } = targetRef
     const onMouseMove = (e: MouseEvent) => {
-      isDraged.current = true
+      if (e.movementX || e.movementY) {
+        isDraged.current = true
+      }
       const { clientX, clientY } = e
 
       const { newX, newY } = {
@@ -37,6 +39,7 @@ export default function useMove<T extends HTMLElement>(
     }
     current.addEventListener('mousedown', (e: MouseEvent) => {
       isDraged.current = false
+
       const { left, top } = moveElement.getBoundingClientRect()
       moveOffsetRef.current = {
         x: e.clientX - left,

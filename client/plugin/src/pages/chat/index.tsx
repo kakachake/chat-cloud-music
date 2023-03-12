@@ -1,12 +1,16 @@
-import style from './index.module.less'
+import styles from './index.module.less'
 import ChatInputBar from './chatInputBar'
 import { MessageList } from 'chat-ui'
-import { useEffect, useRef, useState } from 'react'
-import { IMessageList } from 'chatTypes'
-import { sendMsg, user } from '../../request/socket/chat'
+import { useRef } from 'react'
+import { leaveRoom, sendMsg } from '../../request/socket/chat'
 import useChatList from './useChatList'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import Header from '@/Layout/Header'
+import { setRoomId } from '@/store/slice/roomSlice'
 
 export default function Chat() {
+  const { user } = useAppSelector((state) => state.user)
+  const roomId = useAppSelector((state) => state.room.roomInfo.roomId)
   const messageRef = useRef<HTMLDivElement | null>(null)
   const [chatList, setChatList] = useChatList({
     scrollToBottom
@@ -27,6 +31,7 @@ export default function Chat() {
   }
   const handleSend = (value: string) => {
     sendMsg(value)
+    if (!user) return
     setChatList((prev) => {
       return [
         ...prev,
@@ -40,10 +45,22 @@ export default function Chat() {
     })
     scrollToBottom()
   }
+  const handleExit = () => {
+    leaveRoom(roomId!)
+  }
 
   return (
-    <div className={style.chatWrap}>
-      <div className={style.messageWrap} ref={messageRef}>
+    <div className={styles.chatWrap}>
+      <Header
+        right={
+          <div className={styles.exit} onClick={handleExit}>
+            退出
+          </div>
+        }
+        center={<div>聊天室-{roomId}</div>}
+        left={<div>最小化</div>}
+      ></Header>
+      <div className={styles.messageWrap} ref={messageRef}>
         <MessageList chatList={chatList} />
       </div>
       <ChatInputBar onSend={handleSend} />

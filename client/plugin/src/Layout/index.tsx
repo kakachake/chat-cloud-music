@@ -22,6 +22,8 @@ export default function Layout(props: LayoutProps) {
         })}
         ref={headerRef}
         onClick={() => {
+          console.log(isDraged.current)
+
           if (isDraged.current) return
           setOpen(true)
         }}
@@ -33,7 +35,6 @@ export default function Layout(props: LayoutProps) {
   }
   return (
     <div className={styles.layout}>
-      <Header />
       <Content>{children}</Content>
     </div>
   )
